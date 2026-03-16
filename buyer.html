@@ -1,0 +1,1226 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Registration - BuyNest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 550px;
+            width: 100%;
+            padding: 25px;
+            animation: slideIn3d 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideIn3d {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) rotateX(-10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 8px;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-8px) scale(1.05);
+            }
+        }
+
+        .logo i {
+            font-size: 60px;
+            color: #667eea;
+            filter: drop-shadow(0 5px 15px rgba(102, 126, 234, 0.4));
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 6px;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .trust-line {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 20px;
+            font-style: italic;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 25px;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #e0e0e0;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .progress-step {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: #999;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .progress-step.completed {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #999;
+        }
+
+        .progress-labels span {
+            text-align: center;
+            width: 35px;
+        }
+
+        .progress-labels span.active {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Step Content */
+        .step-content {
+            display: none;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .step-title {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-title i {
+            color: #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .form-group label .optional {
+            color: #999;
+            font-weight: 400;
+            font-size: 12px;
+        }
+
+        .form-group label .recommended {
+            color: #f39c12;
+            font-weight: 400;
+            font-size: 12px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input.error {
+            border-color: #e74c3c;
+            animation: shake 0.5s ease;
+        }
+
+        .form-group input.success {
+            border-color: #2ecc71;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-group.has-error .error-message {
+            display: block;
+        }
+
+        /* Address Section */
+        .address-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 14px;
+        }
+
+        .address-section h3 {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .address-section h3 i {
+            color: #667eea;
+        }
+
+        .address-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .address-grid .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Terms Section */
+        .terms-section {
+            background: #f8f9fa;
+            padding: 14px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+            cursor: pointer;
+            margin-top: 1px;
+        }
+
+        .checkbox-group label {
+            font-size: 13px;
+            color: #555;
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .checkbox-group label a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .checkbox-group label a:hover {
+            text-decoration: underline;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn-back {
+            flex: 1;
+            padding: 14px;
+            background: #f0f0f0;
+            color: #333;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-next {
+            flex: 2;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-next:active {
+            transform: translateY(0);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Password Strength */
+        .password-strength {
+            margin-top: 8px;
+            display: none;
+        }
+
+        .password-strength .strength-bar {
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .password-strength .strength-fill {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .password-strength .strength-text {
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .password-strength.weak .strength-fill {
+            width: 33%;
+            background: #e74c3c;
+        }
+
+        .password-strength.weak .strength-text {
+            color: #e74c3c;
+        }
+
+        .password-strength.medium .strength-fill {
+            width: 66%;
+            background: #f39c12;
+        }
+
+        .password-strength.medium .strength-text {
+            color: #f39c12;
+        }
+
+        .password-strength.strong .strength-fill {
+            width: 100%;
+            background: #2ecc71;
+        }
+
+        .password-strength.strong .strength-text {
+            color: #2ecc71;
+        }
+
+        /* Security & Trust */
+        .security-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .security-text i {
+            color: #2ecc71;
+        }
+
+        /* Login Link */
+        .login-link {
+            text-align: center;
+            margin-top: 16px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 15px;
+                max-width: 100%;
+                width: 100%;
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .logo i {
+                font-size: 42px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .trust-line {
+                font-size: 12px;
+            }
+
+            .address-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .address-grid .full-width {
+                grid-column: 1;
+            }
+
+            .progress-labels {
+                display: none;
+            }
+
+            .progress-step {
+                width: 30px;
+                height: 30px;
+                font-size: 12px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            .form-group label {
+                font-size: 13px;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 11px 12px;
+                font-size: 14px;
+            }
+
+            .btn-next, .btn-back {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-next, .btn-back {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .container {
+                max-width: 100%;
+                width: 100%;
+                margin: 8px;
+                padding: 12px;
+                border-radius: 12px;
+            }
+
+            .logo i {
+                font-size: 36px;
+            }
+
+            .header h1 {
+                font-size: 16px;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .btn-next, .btn-back {
+                padding: 11px;
+                font-size: 13px;
+            }
+        }
+
+        /* iOS specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                min-height: -webkit-fill-available;
+            }
+
+            .container {
+                margin: 10px;
+            }
+        }
+
+        /* Android specific fixes */
+        @media screen and (max-width: 360px) {
+            .container {
+                max-width: 300px;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 25px;
+            position: relative;
+            animation: slideIn3d 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .modal-header h2 {
+            color: #333;
+            font-size: 18px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #667eea;
+        }
+
+        .modal-body {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .modal-body h3 {
+            color: #333;
+            font-size: 15px;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        .modal-body p {
+            margin-bottom: 10px;
+        }
+
+        .modal-body ul {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .modal-body li {
+            margin-bottom: 5px;
+        }
+
+        .agree-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .agree-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-store-alt"></i>
+        </div>
+        
+        <div class="header">
+            <h1>Create Your BuyNest Account</h1>
+        </div>
+        
+        <p class="trust-line">Secure, fast, and convenient shopping starts here.</p>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-step active" data-step="1">1</div>
+                <div class="progress-step" data-step="2">2</div>
+            </div>
+            <div class="progress-labels">
+                <span class="active">Account</span>
+                <span>Address</span>
+            </div>
+        </div>
+
+        <form id="sellerForm" onsubmit="handleSubmit(event)">
+            <!-- Step 1: Account Details -->
+            <div class="step-content active" id="step1">
+                <div class="step-title">
+                    <i class="fas fa-user-circle"></i> Account Details
+                </div>
+
+                <!-- Full Name -->
+                <div class="form-group" id="nameGroup">
+                    <label for="fullName">Full Name <span class="optional">(Required for delivery and account purposes)</span></label>
+                    <input type="text" id="fullName" placeholder="Enter your full name" required>
+                    <span class="error-message">Please enter your full name (letters only)</span>
+                </div>
+
+                <!-- Email Address -->
+                <div class="form-group" id="emailGroup">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                    <span class="error-message">Please enter a valid email address</span>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group" id="phoneGroup">
+                    <label for="phone">Phone Number <span class="recommended">(Optional but Recommended)</span></label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number">
+                    <span class="error-message">Please enter a valid phone number (10-15 digits)</span>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group" id="passwordGroup">
+                    <label for="password">Password <span class="optional">(Min 8 characters, letters + numbers)</span></label>
+                    <input type="password" id="password" placeholder="Create a strong password" required>
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="strength-bar">
+                            <div class="strength-fill"></div>
+                        </div>
+                        <span class="strength-text"></span>
+                    </div>
+                    <span class="error-message">Password must be at least 8 characters with letters and numbers</span>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group" id="confirmPasswordGroup">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
+                    <span class="error-message">Passwords do not match</span>
+                </div>
+
+                <!-- Terms & Conditions -->
+                <div class="terms-section">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="termsCheckbox" required>
+                        <label for="termsCheckbox">
+                            I agree to <a href="#" onclick="openModal('termsModal'); return false;">BuyNest Terms</a> & <a href="#" onclick="openModal('privacyModal'); return false;">Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Next Button -->
+                <button type="button" class="btn-next" onclick="goToStep(2)">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Step 2: Address -->
+            <div class="step-content" id="step2">
+                <div class="step-title">
+                    <i class="fas fa-map-marker-alt"></i> Address
+                </div>
+
+                <div class="address-section">
+                    <h3><i class="fas fa-home"></i> Address <span class="optional">(Optional now, required at checkout)</span></h3>
+                    
+                    <div class="address-grid">
+                        <div class="form-group full-width">
+                            <label for="street">Street</label>
+                            <input type="text" id="street" placeholder="Enter street address">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" placeholder="Enter city">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" id="state" placeholder="Enter state">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="postalCode">Postal Code</label>
+                            <input type="text" id="postalCode" placeholder="Enter postal code">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" id="country" placeholder="Enter country">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="nav-buttons">
+                    <button type="button" class="btn-back" onclick="goToStep(1)">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                    <button type="submit" class="btn-next">
+                        <i class="fas fa-user-plus"></i> create account
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div class="login-link">
+            Already have an account? <a href="index.html">Login here</a>
+        </div>
+
+        <div class="security-text">
+            <i class="fas fa-shield-alt"></i>
+            Your data is secure with BuyNest
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="termsModal" class="modal" onclick="closeModal(event, 'termsModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'termsModal')">&times;</span>
+            <div class="modal-header">
+                <h2><i class="fas fa-file-contract"></i> BuyNest Terms & Conditions</h2>
+            </div>
+            <div class="modal-body">
+                <h3>1. Acceptance of Terms</h3>
+                <p>By accessing and using BuyNest, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                
+                <h3>2. User Accounts</h3>
+                <p>You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.</p>
+                
+                <h3>3. Seller Obligations</h3>
+                <ul>
+                    <li>Provide accurate business information</li>
+                    <li>Maintain product quality and authenticity</li>
+                    <li>Ship products within promised timeframe</li>
+                    <li>Handle customer complaints professionally</li>
+                </ul>
+                
+                <h3>4. Prohibited Items</h3>
+                <p>Sellers cannot list illegal, hazardous, or prohibited items as per local laws and BuyNest policies.</p>
+                
+                <h3>5. Payment & Fees</h3>
+                <p>BuyNest charges a commission on successful sales. Payment is processed securely through our payment partners.</p>
+                
+                <h3>6. Termination</h3>
+                <p>BuyNest reserves the right to terminate accounts that violate our terms or engage in fraudulent activities.</p>
+                
+                <button class="agree-btn" onclick="closeModal(null, 'termsModal')">I Have Read & Agree</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal" onclick="closeModal(event, 'privacyModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'privacyModal')">&times;</span>
+            <div class="modal-header">
+                <h2><i class="fas fa-shield-alt"></i> Privacy Policy</h2>
+            </div>
+            <div class="modal-body">
+                <h3>1. Information We Collect</h3>
+                <ul>
+                    <li>Personal information (name, email, phone)</li>
+                    <li>Business information</li>
+                    <li>Payment and transaction data</li>
+                    <li>Device and usage information</li>
+                </ul>
+                
+                <h3>2. How We Use Your Information</h3>
+                <ul>
+                    <li>To provide and improve our services</li>
+                    <li>To process transactions</li>
+                    <li>To communicate with you</li>
+                    <li>To prevent fraud and ensure security</li>
+                </ul>
+                
+                <h3>3. Data Protection</h3>
+                <p>We implement industry-standard security measures to protect your personal information.</p>
+                
+                <h3>4. Third-Party Sharing</h3>
+                <p>We do not sell your personal information. We may share data with trusted partners for payment processing and delivery services.</p>
+                
+                <h3>5. Your Rights</h3>
+                <p>You have the right to access, correct, or delete your personal information at any time.</p>
+                
+                <button class="agree-btn" onclick="closeModal(null, 'privacyModal')">I Have Read & Understand</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event, modalId) {
+            if (event === null || event.target.classList.contains('modal')) {
+                document.getElementById(modalId).classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        let currentStep = 1;
+
+        function goToStep(step) {
+            if (step === 2 && !validateStep1()) {
+                return;
+            }
+            
+            // Update progress bar
+            document.querySelectorAll('.progress-step').forEach((el, index) => {
+                if (index + 1 < step) {
+                    el.classList.add('completed');
+                    el.classList.remove('active');
+                } else if (index + 1 === step) {
+                    el.classList.add('active');
+                    el.classList.remove('completed');
+                } else {
+                    el.classList.remove('active', 'completed');
+                }
+            });
+
+            document.querySelectorAll('.progress-labels span').forEach((el, index) => {
+                if (index + 1 === step) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+
+            // Show/hide steps
+            document.querySelectorAll('.step-content').forEach((el, index) => {
+                if (index + 1 === step) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+
+            currentStep = step;
+        }
+
+        function validateStep1() {
+            let isValid = true;
+            
+            // Full Name
+            const nameGroup = document.getElementById('nameGroup');
+            const fullName = document.getElementById('fullName');
+            const lettersOnly = /^[a-zA-Z\s]+$/;
+            if (fullName.value.trim() === '' || !lettersOnly.test(fullName.value.trim())) {
+                nameGroup.classList.add('has-error');
+                fullName.classList.add('error');
+                fullName.classList.remove('success');
+                isValid = false;
+            } else {
+                nameGroup.classList.remove('has-error');
+                fullName.classList.remove('error');
+                fullName.classList.add('success');
+            }
+            
+            // Email
+            const emailGroup = document.getElementById('emailGroup');
+            const email = document.getElementById('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email.value.trim() === '' || !emailRegex.test(email.value.trim())) {
+                emailGroup.classList.add('has-error');
+                email.classList.add('error');
+                email.classList.remove('success');
+                isValid = false;
+            } else {
+                emailGroup.classList.remove('has-error');
+                email.classList.remove('error');
+                email.classList.add('success');
+            }
+            
+            // Phone (optional but recommended)
+            const phoneGroup = document.getElementById('phoneGroup');
+            const phone = document.getElementById('phone');
+            if (phone.value.trim() !== '') {
+                const phoneRegex = /^\d{10,15}$/;
+                if (!phoneRegex.test(phone.value.replace(/\D/g, ''))) {
+                    phoneGroup.classList.add('has-error');
+                    phone.classList.add('error');
+                    phone.classList.remove('success');
+                    isValid = false;
+                } else {
+                    phoneGroup.classList.remove('has-error');
+                    phone.classList.remove('error');
+                    phone.classList.add('success');
+                }
+            } else {
+                phoneGroup.classList.remove('has-error');
+                phone.classList.remove('error');
+            }
+            
+            // Password
+            const passwordGroup = document.getElementById('passwordGroup');
+            const password = document.getElementById('password');
+            const hasLetters = /[a-zA-Z]/.test(password.value);
+            const hasNumbers = /\d/.test(password.value);
+            if (password.value.length < 8 || !hasLetters || !hasNumbers) {
+                passwordGroup.classList.add('has-error');
+                password.classList.add('error');
+                password.classList.remove('success');
+                isValid = false;
+            } else {
+                passwordGroup.classList.remove('has-error');
+                password.classList.remove('error');
+                password.classList.add('success');
+            }
+            
+            // Confirm Password
+            const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+            const confirmPassword = document.getElementById('confirmPassword');
+            if (confirmPassword.value !== password.value || confirmPassword.value === '') {
+                confirmPasswordGroup.classList.add('has-error');
+                confirmPassword.classList.add('error');
+                confirmPassword.classList.remove('success');
+                isValid = false;
+            } else {
+                confirmPasswordGroup.classList.remove('has-error');
+                confirmPassword.classList.remove('error');
+                confirmPassword.classList.add('success');
+            }
+            
+            // Terms
+            const termsCheckbox = document.getElementById('termsCheckbox');
+            if (!termsCheckbox.checked) {
+                alert('Please agree to the Terms & Conditions');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+
+        // Real-time validation
+        const fullNameInput = document.getElementById('fullName');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+
+        // Full Name Validation
+        fullNameInput.addEventListener('blur', function() {
+            const nameGroup = document.getElementById('nameGroup');
+            const lettersOnly = /^[a-zA-Z\s]+$/;
+            
+            if (this.value.trim() === '') {
+                nameGroup.classList.add('has-error');
+                this.classList.add('error');
+                this.classList.remove('success');
+            } else if (!lettersOnly.test(this.value.trim())) {
+                nameGroup.classList.add('has-error');
+                this.classList.add('error');
+                this.classList.remove('success');
+            } else {
+                nameGroup.classList.remove('has-error');
+                this.classList.remove('error');
+                this.classList.add('success');
+            }
+        });
+
+        // Email Validation
+        emailInput.addEventListener('blur', function() {
+            const emailGroup = document.getElementById('emailGroup');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (this.value.trim() === '') {
+                emailGroup.classList.add('has-error');
+                this.classList.add('error');
+                this.classList.remove('success');
+            } else if (!emailRegex.test(this.value.trim())) {
+                emailGroup.classList.add('has-error');
+                this.classList.add('error');
+                this.classList.remove('success');
+            } else {
+                emailGroup.classList.remove('has-error');
+                this.classList.remove('error');
+                this.classList.add('success');
+            }
+        });
+
+        // Phone Validation
+        phoneInput.addEventListener('blur', function() {
+            const phoneGroup = document.getElementById('phoneGroup');
+            const phoneRegex = /^\d{10,15}$/;
+            
+            if (this.value.trim() === '') {
+                phoneGroup.classList.remove('has-error');
+                this.classList.remove('error');
+            } else if (!phoneRegex.test(this.value.replace(/\D/g, ''))) {
+                phoneGroup.classList.add('has-error');
+                this.classList.add('error');
+                this.classList.remove('success');
+            } else {
+                phoneGroup.classList.remove('has-error');
+                this.classList.remove('error');
+                this.classList.add('success');
+            }
+        });
+
+        // Password Validation with strength meter
+        passwordInput.addEventListener('input', function() {
+            const passwordGroup = document.getElementById('passwordGroup');
+            const hasLetters = /[a-zA-Z]/.test(this.value);
+            const hasNumbers = /\d/.test(this.value);
+            const isLongEnough = this.value.length >= 8;
+            
+            if (this.value.length > 0) {
+                document.getElementById('passwordStrength').style.display = 'block';
+                
+                if (isLongEnough && hasLetters && hasNumbers) {
+                    document.getElementById('passwordStrength').className = 'password-strength strong';
+                    document.querySelector('.strength-text').textContent = 'Strong password';
+                    passwordGroup.classList.remove('has-error');
+                    this.classList.remove('error');
+                    this.classList.add('success');
+                } else if ((isLongEnough && hasLetters) || (isLongEnough && hasNumbers)) {
+                    document.getElementById('passwordStrength').className = 'password-strength medium';
+                    document.querySelector('.strength-text').textContent = 'Medium strength - add numbers and letters';
+                } else {
+                    document.getElementById('passwordStrength').className = 'password-strength weak';
+                    document.querySelector('.strength-text').textContent = 'Weak password - use 8+ characters with letters and numbers';
+                }
+            } else {
+                document.getElementById('passwordStrength').style.display = 'none';
+                this.classList.remove('success');
+            }
+        });
+
+        // Confirm Password Validation
+        confirmPasswordInput.addEventListener('input', function() {
+            const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+            
+            if (this.value === passwordInput.value && this.value.length > 0) {
+                confirmPasswordGroup.classList.remove('has-error');
+                this.classList.remove('error');
+                this.classList.add('success');
+            }
+        });
+
+        confirmPasswordInput.addEventListener('blur', function() {
+            const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+            
+            if (this.value !== passwordInput.value) {
+                confirmPasswordGroup.classList.add('has-error');
+                this.classList.add('error');
+                this.classList.remove('success');
+            } else if (this.value.length > 0) {
+                confirmPasswordGroup.classList.remove('has-error');
+                this.classList.remove('error');
+                this.classList.add('success');
+            }
+        });
+
+        // Form Submit
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Store form data in localStorage for verification page
+            const formData = {
+                fullName: document.getElementById('fullName').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                street: document.getElementById('street').value.trim(),
+                city: document.getElementById('city').value.trim(),
+                state: document.getElementById('state').value.trim(),
+                postalCode: document.getElementById('postalCode').value.trim(),
+                country: document.getElementById('country').value.trim()
+            };
+            localStorage.setItem('sellerFormData', JSON.stringify(formData));
+            
+            // Redirect to verification page
+            window.location.href = 'buyer-verify.html';
+        }
+    </script>
+</body>
+</html>

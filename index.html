@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - BuyNest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0F4C81 0%, #0a3254 100%);
+            padding: 15px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            max-width: 850px;
+            width: 100%;
+            animation: slideIn3d 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideIn3d {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) rotateX(-10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        .left-section {
+            flex: 1;
+            background: linear-gradient(135deg, #0F4C81 0%, #0a3254 100%);
+            padding: 50px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .logo {
+            width: 280px;
+            height: 280px;
+            object-fit: contain;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-10px) scale(1.05);
+            }
+        }
+
+        .welcome-text {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #FF7A00;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .tagline {
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0.9;
+            line-height: 1.6;
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .right-section {
+            flex: 1;
+            padding: 30px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeInRight 0.6s ease-out 0.4s both;
+            min-height: 400px;
+        }
+
+        @keyframes fadeInRight {
+            0% {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .login-header {
+            margin-bottom: 40px;
+        }
+
+        .login-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0F4C81;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #0F4C81;
+            background: white;
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 50px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #0F4C81;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -15px;
+            margin-bottom: 25px;
+        }
+
+        .forgot-password a {
+            color: #FF7A00;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #e66e00;
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #FF7A00 0%, #e66e00 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 122, 0, 0.3);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 122, 0, 0.4);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .create-account-section {
+            text-align: center;
+        }
+
+        .create-account-section p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .account-options {
+            display: flex;
+            gap: 15px;
+        }
+
+        .account-btn {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #0F4C81;
+            background: transparent;
+            color: #0F4C81;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .account-btn:hover {
+            background: #0F4C81;
+            color: white;
+        }
+
+        .account-btn.buyer {
+            border-color: #0F4C81;
+            color: #0F4C81;
+        }
+
+        .account-btn.buyer:hover {
+            background: #0F4C81;
+            color: white;
+        }
+
+        .account-btn.seller {
+            border-color: #FF7A00;
+            color: #FF7A00;
+        }
+
+        .account-btn.seller:hover {
+            background: #FF7A00;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                max-width: 100%;
+                width: 100%;
+                margin: 10px;
+            }
+
+            .left-section {
+                padding: 25px 20px;
+            }
+
+            .logo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .welcome-text {
+                font-size: 20px;
+            }
+
+            .tagline {
+                font-size: 13px;
+            }
+
+            .right-section {
+                padding: 25px 20px;
+                min-height: auto;
+            }
+
+            .login-header {
+                margin-bottom: 25px;
+            }
+
+            .login-header h2 {
+                font-size: 22px;
+            }
+
+            .form-group {
+                margin-bottom: 18px;
+            }
+
+            .form-group input {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+
+            .account-options {
+                flex-direction: column;
+            }
+
+            .account-btn {
+                padding: 12px 16px;
+                font-size: 13px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                margin: 5px;
+                border-radius: 12px;
+            }
+
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .welcome-text {
+                font-size: 18px;
+            }
+
+            .tagline {
+                font-size: 12px;
+            }
+
+            .login-header h2 {
+                font-size: 20px;
+            }
+
+            .login-btn {
+                padding: 14px;
+                font-size: 15px;
+            }
+
+            .divider {
+                margin: 20px 0;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .container {
+                margin: 5px;
+            }
+
+            .logo {
+                width: 90px;
+                height: 90px;
+            }
+
+            .welcome-text {
+                font-size: 16px;
+            }
+        }
+
+        /* iOS specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                min-height: -webkit-fill-available;
+            }
+
+            .container {
+                margin: 10px;
+            }
+        }
+
+        /* Android specific fixes */
+        @media screen and (max-width: 360px) {
+            .container {
+                max-width: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <img src="image.png" alt="BuyNest Logo" class="logo">
+            <h1 class="welcome-text">Welcome to BuyNest</h1>
+            <p class="tagline">Shop Smart. Sell Easy. Trust BuyNest.</p>
+        </div>
+        
+        <div class="right-section">
+            <div class="login-header">
+                <h2>Login</h2>
+                <p>Please sign in to continue</p>
+            </div>
+            
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                    </div>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="forgot.html">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <div class="create-account-section">
+                <p>Don't have an account?</p>
+                <div class="account-options">
+                    <a href="buyer.html" class="account-btn buyer">Sign Up</a>
+                </div>
+            </div>
+
+            <div class="terms-link" style="text-align: center; margin-top: 15px;">
+                <a href="BuyNest Terms & Conditions.html" style="color: #0F4C81; text-decoration: none; font-size: 14px; font-weight: 500;">BuyNest Terms & Conditions</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // Login form submission - redirect to home.html
+        const loginForm = document.querySelector('form');
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Redirect to home.html on login button click
+            window.location.href = 'home.html';
+        });
+    </script>
+</body>
+</html>

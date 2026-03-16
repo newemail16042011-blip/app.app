@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - BuyNest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: #0F4C81;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .website-name {
+            color: white;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn:hover {
+            color: #FF7A00;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            color: #0F4C81;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0F4C81 0%, #0a3254 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 50px;
+            color: white;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .profile-email {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .profile-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .profile-option {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .profile-option:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .profile-option i {
+            width: 30px;
+            font-size: 18px;
+            color: #0F4C81;
+        }
+
+        .profile-option span {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .profile-option .arrow {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .header {
+                padding: 12px 15px;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .logo-section {
+                justify-content: center;
+            }
+
+            .logo {
+                width: 35px;
+                height: 35px;
+            }
+
+            .website-name {
+                font-size: 20px;
+            }
+
+            .back-btn {
+                position: absolute;
+                left: 15px;
+                font-size: 20px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .page-title {
+                font-size: 20px;
+                text-align: center;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+
+            .profile-avatar {
+                width: 90px;
+                height: 90px;
+                font-size: 40px;
+            }
+
+            .profile-name {
+                font-size: 20px;
+            }
+
+            .profile-email {
+                font-size: 14px;
+            }
+
+            .profile-option {
+                padding: 12px 15px;
+            }
+
+            .profile-option i {
+                width: 25px;
+                font-size: 16px;
+            }
+
+            .profile-option span {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 10px 12px;
+            }
+
+            .logo {
+                width: 30px;
+                height: 30px;
+            }
+
+            .website-name {
+                font-size: 18px;
+            }
+
+            .container {
+                padding: 12px;
+            }
+
+            .page-title {
+                font-size: 18px;
+            }
+
+            .profile-card {
+                padding: 15px;
+            }
+
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 35px;
+            }
+
+            .profile-name {
+                font-size: 18px;
+            }
+
+            .logout-btn {
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
+
+        /* iOS fix */
+        @supports (-webkit-touch-callout: none) {
+            @media (max-width: 768px) {
+                body {
+                    min-height: -webkit-fill-available;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="home.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="logo-section">
+            <img src="image.png" alt="BuyNest Logo" class="logo">
+            <span class="website-name">BuyNest</span>
+        </div>
+        <div style="width: 40px;"></div>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">My Profile</h1>
+        
+        <div class="profile-card">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <h2 class="profile-name">Guest User</h2>
+            <p class="profile-email">Please login to view your profile</p>
+            
+            <div class="profile-options">
+                <a href="index.html" class="profile-option">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Login</span>
+                    <i class="fas fa-chevron-right arrow"></i>
+                </a>
+                <a href="buyer.html" class="profile-option">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Create Account</span>
+                    <i class="fas fa-chevron-right arrow"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
